@@ -1,11 +1,13 @@
 resource "aws_vpc" "myvpc" {
   cidr_block       = "10.0.0.0/16"
   instance_tenancy = "default"
+  enable_dns_hostnames = true 
 
   tags = {
     Name = "myvpc"
   }
 }
+
 
 variable "subnets_cidr" {
   description = "Total number of subnets"
@@ -24,7 +26,7 @@ resource "aws_subnet" "mysubnet" {
   availability_zone = each.key
 
   tags = {
-    Name = "each.key"
+    Name = each.key 
   }
 }
 
