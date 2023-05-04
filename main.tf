@@ -9,18 +9,18 @@ resource "aws_vpc" "myvpc" {
 
 variable "subnets_cidr" {
   description = "Total number of subnets"
-  type = map(string)
+  type        = map(string)
   default = {
     "us-east-1a" = "10.0.1.0/24",
-    "us-east-1b" = "10.0.2.0/24" , 
+    "us-east-1b" = "10.0.2.0/24",
     "us-east-1c" = "10.0.3.0/24"
-    }
+  }
 }
 
 resource "aws_subnet" "mysubnet" {
-  for_each   = var.subnets_cidr
-  vpc_id     = aws_vpc.myvpc.id
-  cidr_block = each.value
+  for_each          = var.subnets_cidr
+  vpc_id            = aws_vpc.myvpc.id
+  cidr_block        = each.value
   availability_zone = each.key
 
   tags = {
@@ -55,11 +55,11 @@ resource "aws_security_group" "mysecurity" {
   vpc_id      = aws_vpc.myvpc.id
 
   ingress {
-    description      = "TLS from VPC"
-    from_port        = 443
-    to_port          = 443
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    description = "TLS from VPC"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
